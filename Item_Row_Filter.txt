@@ -1,0 +1,8 @@
+<<<<<<<<< Item Row Filter >>>>>>>>>
+
+    let itemarray = this.phoneForms.value;
+    itemarray = itemarray.filter(data => data.item_Profile_Id == "" || data.item_Profile_Id == null)
+    if(itemarray.length == 0)
+    {
+      this.addnewrow();
+    }

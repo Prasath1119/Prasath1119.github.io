@@ -1,0 +1,37 @@
+ 
+<<<<<<<<< Button Enable And Disable Using Jquery >>>>>>>>>
+
+*** HTML ***
+
+ <div class="row" >
+    <div class="col-md-6">
+      <button type="submit" id="BtnRequest" class="btn-lg btn btn-primary" (click)="sendmail()">Invite Your Friend</button>
+    </div>
+  </div>
+
+
+*** TypeScript ***
+
+declare var $;
+
+ sendmail()
+    {
+      this.submitted = true;
+      if (this.referForm.valid==true)
+      {
+      $("#BtnRequest").attr("disabled", true);
+      $("#BtnRequest").text("Processing...");
+      this.referForm.get('userId').setValue(this.UserId);
+      this.referfreindservice.sendmail(this.referForm.getRawValue()).subscribe(data =>{
+      debugger;
+      if( data.status == 1)
+      {
+      swal.fire({position: 'center',type: 'success', title: data.message ,showConfirmButton: false, timer: 2500});
+      }  
+      $("#BtnRequest").attr("disabled", false);
+      $("#BtnRequest").text("Invite Your Friend");
+      this.referForm.reset();
+      this.submitted=false;
+      })
+    }
+  }

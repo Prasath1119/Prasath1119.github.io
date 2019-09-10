@@ -1,0 +1,30 @@
+<<<<<<<<< Cookies Component >>>>>>>>>
+cookies()
+  {
+    debugger;
+    localStorage.setItem('COOKIES_ACCEPTED', 'accepted');
+    this.cookie_hide = false;
+    var url_string = window.location.href; // returns the href (URL) of the current page
+    this.router.navigate([url_string]);
+  }
+
+
+
+<<<<<<<<< AppComponent >>>>>>>>>
+
+*** HTML ***
+  <div>
+    <app-cookies *ngIf="cookies"></app-cookies>
+  </div>
+
+*** TS ***
+ngOnInit() {
+    debugger;
+    let cookieAccepted = localStorage.getItem('COOKIES_ACCEPTED');
+    if (cookieAccepted) {
+      this.cookies = false;
+    } else {
+      this.cookies = true;
+    }
+
+  }
