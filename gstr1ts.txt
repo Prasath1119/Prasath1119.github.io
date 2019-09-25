@@ -1,0 +1,155 @@
+
+
+    ngOnInit() {
+
+    debugger;
+    $('#supp_Inv_Date').attr('disabled', false)
+    $('#daywise').attr('disabled', false)
+
+    this.selectedFilterValue = "Today";
+    this.filter('This Month');
+    this.companyId = sessionStorage.getItem("companyId");
+    this.companyName = sessionStorage.getItem("companyName");
+    this.GSTIN = sessionStorage.getItem("company_GSTIN");
+    this.fromDate = this.datePipe.transform(this.selectedFromDate, 'yyyy-MM-dd');
+    this.toDate = this.datePipe.transform(this.selectedToDate, 'yyyy-MM-dd');
+    this.FooTableLoad(this.companyId, this.fromDate, this.toDate);
+
+    document.getElementById("GSTR1").style.display = 'block';
+    document.getElementById("B2B").style.display = 'none';
+    document.getElementById("B2C").style.display = 'none';
+    document.getElementById("B2CSMALL").style.display = 'none';
+    document.getElementById("CDNR").style.display = 'none';
+    document.getElementById("CDNUR").style.display = 'none';
+
+    this.gstr4service.getGstr1DocumentDetails(this.companyId, this.selectedFromDate, this.selectedToDate).subscribe((data) => {
+      debugger
+      if (data) {
+        this.dropdownData = data;
+      }
+    });
+  }
+
+
+    changereport(idAttr) {
+
+    debugger;
+    this.dropDown_selectedvalue = idAttr;
+    this.report(idAttr);
+
+    }
+
+   onReport(event) {
+    debugger;
+
+      var target = event.target || event.srcElement || event.currentTarget;
+      if (target.attributes.id) {
+      this.trans_summary = true;
+
+      var idAttr = target.attributes.id.value;
+      this.nameidAttr = target.attributes.id.value;
+
+      var nameAttr = target.attributes.name.value;
+    }
+    this.selectedValue = idAttr;
+    this.report(idAttr);
+  }
+
+    report(idAttr) {
+
+      if (idAttr == "B2b invoice 4A,4B,4C") {
+
+      debugger;
+      this.trans_summary = true;
+      this.table_Name = idAttr;
+      this.type = 'B2binvoice4A,4B,4C';
+      $('#supp_Inv_Date').attr('disabled', true);
+      $('#daywise').attr('disabled', true);
+
+      document.getElementById("B2B").style.display = 'block';
+      document.getElementById("GSTR1").style.display = 'none';
+      document.getElementById("B2C").style.display = 'none';
+      document.getElementById("B2CSMALL").style.display = 'none';
+      document.getElementById("CDNR").style.display = 'none';
+      document.getElementById("CDNUR").style.display = 'none';
+      this.FooTableLoadB2B(this.companyId, this.selectedFromDate, this.selectedToDate, idAttr);
+
+    }
+
+    if (idAttr == 'B2C (Large) Invoices 5A, 5B') {
+
+      debugger;
+      this.trans_summary = true;
+      this.table_Name = idAttr;
+      $('#supp_Inv_Date').attr('disabled', true);
+      $('#daywise').attr('disabled', true);
+      this.type = 'B2C(Large)Invoices5A,5B';
+
+      document.getElementById("B2C").style.display = 'block';
+      document.getElementById("GSTR1").style.display = 'none';
+      document.getElementById("B2B").style.display = 'none';
+      document.getElementById("B2CSMALL").style.display = 'none';
+      document.getElementById("CDNR").style.display = 'none';
+      document.getElementById("CDNUR").style.display = 'none';
+      this.FooTableLoadB2C(this.companyId, this.selectedFromDate, this.selectedToDate, idAttr);
+
+    }
+
+    if (idAttr == 'B2C(Small) Details - 7') {
+
+      debugger;
+      this.trans_summary = true;
+      this.table_Name = idAttr;
+      $('#supp_Inv_Date').attr('disabled', true);
+      $('#daywise').attr('disabled', true);
+      this.type = 'B2C(Small)Details7';
+
+      document.getElementById("B2CSMALL").style.display = 'block';
+      document.getElementById("GSTR1").style.display = 'none';
+      document.getElementById("B2B").style.display = 'none';
+      document.getElementById("B2C").style.display = 'none';
+      document.getElementById("CDNR").style.display = 'none';
+      document.getElementById("CDNUR").style.display = 'none';
+      this.FooTableLoadB2Csmall(this.companyId, this.selectedFromDate, this.selectedToDate, idAttr);
+
+    }
+
+    if (idAttr == 'Credit/Debit Note (Registered) – 9B') {
+
+      debugger;
+      this.trans_summary = true;
+      this.table_Name = idAttr;
+      $('#supp_Inv_Date').attr('disabled', true);
+      $('#daywise').attr('disabled', true);
+      this.type = 'CreditDebitNote(Registered)9B';
+
+      document.getElementById("CDNR").style.display = 'block';
+      document.getElementById("GSTR1").style.display = 'none';
+      document.getElementById("B2B").style.display = 'none';
+      document.getElementById("B2C").style.display = 'none';
+      document.getElementById("B2CSMALL").style.display = 'none';
+      document.getElementById("CDNUR").style.display = 'none';
+      this.FooTableLoadCDNR(this.companyId, this.selectedFromDate, this.selectedToDate, idAttr);
+
+    }
+
+    if (idAttr == 'Credit/Debit Note (UnRegistered) – 9B') {
+
+      debugger;
+      this.trans_summary = true;
+      this.table_Name = idAttr;
+      $('#supp_Inv_Date').attr('disabled', true);
+      $('#daywise').attr('disabled', true);
+      this.type = 'CreditDebitNote(UnRegistered)9B';
+      document.getElementById("CDNUR").style.display = 'block';
+      document.getElementById("GSTR1").style.display = 'none';
+      document.getElementById("B2B").style.display = 'none';
+      document.getElementById("B2C").style.display = 'none';
+      document.getElementById("B2CSMALL").style.display = 'none';
+      document.getElementById("CDNR").style.display = 'none';
+      this.FooTableLoadCDNUR(this.companyId, this.selectedFromDate, this.selectedToDate, idAttr);
+
+    }
+  }
+
+
